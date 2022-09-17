@@ -1,0 +1,29 @@
+package kvbdev.model;
+
+import lombok.Getter;
+import lombok.ToString;
+
+import java.util.Objects;
+
+@Getter
+@ToString
+public class Customer {
+    private final String name;
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(name, customer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+}
