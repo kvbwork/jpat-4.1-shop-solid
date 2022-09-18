@@ -1,17 +1,12 @@
 package kvbdev.model;
 
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 public class OrderBuilder {
-    private Customer customer;
     private Basket basket;
     private Optional<Delivery> delivery = Optional.empty();
     private OrderStatus orderStatus = OrderStatus.NEW;
-
-    public OrderBuilder customer(Customer customer) {
-        this.customer = customer;
-        return this;
-    }
 
     public OrderBuilder basket(Basket basket) {
         this.basket = basket;
@@ -24,7 +19,7 @@ public class OrderBuilder {
     }
 
     public Order build(){
-        return new Order(null, customer, basket, delivery, orderStatus);
+        return new Order(null, ZonedDateTime.now(), basket, delivery, orderStatus);
     }
 
 }

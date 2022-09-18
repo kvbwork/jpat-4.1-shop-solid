@@ -1,7 +1,7 @@
 package kvbdev.model;
 
 public enum OrderStatus {
-    NEW("Создан"),
+    NEW("Новый"),
     CANCELED("Отменен"),
     CONFIRMED("Подтвержден"),
     COLLECTED("Собран"),

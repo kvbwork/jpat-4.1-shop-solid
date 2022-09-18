@@ -1,10 +1,7 @@
 package kvbdev.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Basket {
@@ -12,6 +9,11 @@ public class Basket {
 
     public Basket() {
         map = new HashMap<>();
+    }
+
+    public Basket(Basket sourceBasket){
+        this();
+        map.putAll(sourceBasket.map);
     }
 
     public void add(Product product) {
@@ -25,8 +27,24 @@ public class Basket {
                 .findAny();
     }
 
+    public Optional<Long> getCount(Product product){
+        return Optional.ofNullable(map.get(product));
+    }
+
+    public void setCount(Product product, long count){
+        map.put(product, count);
+    }
+
     public void remove(Product product) {
         map.remove(product);
+    }
+
+    public void clear(){
+        map.clear();
+    }
+
+    public int size(){
+        return map.size();
     }
 
     public Set<Entry<Product, Long>> entrySet() {
