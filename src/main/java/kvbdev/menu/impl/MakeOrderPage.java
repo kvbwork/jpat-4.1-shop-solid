@@ -2,7 +2,7 @@ package kvbdev.menu.impl;
 
 import kvbdev.menu.AbstractPage;
 import kvbdev.menu.InteractiveChannel;
-import kvbdev.menu.view.Presenter;
+import kvbdev.view.Presenter;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
 import kvbdev.model.OrderBuilder;

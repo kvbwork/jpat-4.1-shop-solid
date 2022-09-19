@@ -1,4 +1,4 @@
-package kvbdev.menu.view;
+package kvbdev.view;
 
 import java.util.Optional;
 

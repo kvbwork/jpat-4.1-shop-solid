@@ -2,7 +2,7 @@ package kvbdev.menu.impl;
 
 import kvbdev.menu.ActionListPage;
 import kvbdev.menu.InteractiveChannel;
-import kvbdev.menu.view.Presenter;
+import kvbdev.view.Presenter;
 import kvbdev.model.ShoppingCart;
 
 public class ShoppingCartPage extends ActionListPage {

@@ -1,6 +1,6 @@
-package kvbdev.menu.view.impl;
+package kvbdev.view.impl;
 
-import kvbdev.menu.view.Presenter;
+import kvbdev.view.Presenter;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
 import kvbdev.model.ShoppingCart;

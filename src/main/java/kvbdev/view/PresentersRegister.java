@@ -1,4 +1,4 @@
-package kvbdev.menu.view;
+package kvbdev.view;
 
 public interface PresentersRegister {
     <T> Presenter<T> getPresenterFor(Class<T> clazz);

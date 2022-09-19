@@ -1,7 +1,7 @@
 package kvbdev.menu.impl;
 
 import kvbdev.menu.ActionListPage;
-import kvbdev.menu.view.Presenter;
+import kvbdev.view.Presenter;
 import kvbdev.model.Order;
 
 public class ShowOrderPage extends ActionListPage {
