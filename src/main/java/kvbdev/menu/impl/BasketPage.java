@@ -1,16 +1,18 @@
-package kvbdev.menu;
+package kvbdev.menu.impl;
 
+import kvbdev.menu.AbstractItemListPage;
+import kvbdev.menu.InteractiveChannel;
 import kvbdev.model.Basket;
 import kvbdev.model.Product;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class BasketPage2 extends AbstractItemListPage<Product> {
+public class BasketPage extends AbstractItemListPage<Product> {
     private static String ITEM_LINE_FORMAT = "\t%-80.80s %d шт x %d руб = %d руб";
     protected final Basket basket;
 
-    public BasketPage2(String pageTitle, Basket basket) {
+    public BasketPage(String pageTitle, Basket basket) {
         super(
                 pageTitle,
                 p -> String.valueOf(p.getId()),

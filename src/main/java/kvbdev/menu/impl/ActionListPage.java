@@ -1,4 +1,8 @@
-package kvbdev.menu;
+package kvbdev.menu.impl;
+
+import kvbdev.menu.AbstractPage;
+import kvbdev.menu.Action;
+import kvbdev.menu.InteractiveChannel;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;

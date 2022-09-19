@@ -1,5 +1,7 @@
-package kvbdev.menu;
+package kvbdev.menu.impl;
 
+import kvbdev.menu.AbstractPage;
+import kvbdev.menu.InteractiveChannel;
 import kvbdev.menu.view.Presenter;
 import kvbdev.model.Basket;
 import kvbdev.model.Delivery;
@@ -59,7 +61,10 @@ public class MakeOrderPage extends AbstractPage {
 
         channel.println("Подтвердите заказ (оставьте пустым для отмены):");
         String inputStr = channel.readLine();
-        if (inputStr.isEmpty()) return;
+        if (inputStr.isEmpty()){
+            channel.println("Отмена.");
+            return;
+        }
 
         newOrderConsumer.accept(order);
     }

@@ -23,6 +23,10 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public Order(Basket basket, Optional<Delivery> delivery){
+        this(null, ZonedDateTime.now(), basket, delivery, OrderStatus.NEW);
+    }
+
     public long getTotal() {
         long result = basket.getTotal();
         if (delivery.isPresent()) {

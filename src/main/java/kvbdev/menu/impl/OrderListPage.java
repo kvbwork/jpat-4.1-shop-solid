@@ -1,5 +1,6 @@
-package kvbdev.menu;
+package kvbdev.menu.impl;
 
+import kvbdev.menu.AbstractItemListPage;
 import kvbdev.model.Order;
 import kvbdev.model.Product;
 
@@ -8,11 +9,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class OrderListPage2 extends AbstractItemListPage<Order> {
+public class OrderListPage extends AbstractItemListPage<Order> {
     private static String ITEM_LINE_FORMAT = "Заказ %d от %s %d строк на сумму %d руб. (%s)";
     protected final List<Order> orderList;
 
-    public OrderListPage2(String pageTitle, List<Order> orderList, Consumer<Order> itemAction) {
+    public OrderListPage(String pageTitle, List<Order> orderList, Consumer<Order> itemAction) {
         super(
                 pageTitle,
                 o -> String.valueOf(o.getId()),
