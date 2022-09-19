@@ -4,20 +4,20 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class Basket {
+public class ShoppingCart {
     protected final Map<Product, Long> map;
-
-    public Basket() {
+    
+    public ShoppingCart() {
         map = new HashMap<>();
     }
 
-    public Basket(Basket sourceBasket){
+    public ShoppingCart(ShoppingCart sourceShoppingCart){
         this();
-        map.putAll(sourceBasket.map);
+        map.putAll(sourceShoppingCart.map);
     }
 
     public void add(Product product) {
-        map.merge(product, 1L, (oldValue, newValue) -> oldValue + newValue);
+        map.merge(product, 1L, Long::sum);
     }
 
     public Optional<Product> findById(Long id) {
@@ -45,6 +45,10 @@ public class Basket {
 
     public int size(){
         return map.size();
+    }
+
+    public boolean isEmpty(){
+        return map.isEmpty();
     }
 
     public Set<Entry<Product, Long>> entrySet() {

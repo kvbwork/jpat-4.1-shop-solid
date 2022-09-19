@@ -4,7 +4,6 @@ import kvbdev.menu.AbstractPage;
 import kvbdev.menu.Action;
 import kvbdev.menu.InteractiveChannel;
 
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;

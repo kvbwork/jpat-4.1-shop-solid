@@ -4,12 +4,12 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 public class OrderBuilder {
-    private Basket basket;
+    private ShoppingCart shoppingCart;
     private Optional<Delivery> delivery = Optional.empty();
     private OrderStatus orderStatus = OrderStatus.NEW;
 
-    public OrderBuilder basket(Basket basket) {
-        this.basket = basket;
+    public OrderBuilder shoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
         return this;
     }
 
@@ -19,7 +19,7 @@ public class OrderBuilder {
     }
 
     public Order build(){
-        return new Order(null, ZonedDateTime.now(), basket, delivery, orderStatus);
+        return new Order(null, ZonedDateTime.now(), shoppingCart, delivery, orderStatus);
     }
 
 }

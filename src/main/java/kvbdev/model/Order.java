@@ -11,24 +11,24 @@ import java.util.Optional;
 public class Order {
     private Long id;
     private ZonedDateTime dateTime;
-    private final Basket basket;
+    private final ShoppingCart shoppingCart;
     private Optional<Delivery> delivery;
     private OrderStatus orderStatus;
 
-    public Order(Long id, ZonedDateTime dateTime, Basket basket, Optional<Delivery> delivery, OrderStatus orderStatus) {
+    public Order(Long id, ZonedDateTime dateTime, ShoppingCart shoppingCart, Optional<Delivery> delivery, OrderStatus orderStatus) {
         this.id = id;
         this.dateTime = dateTime;
-        this.basket = basket;
+        this.shoppingCart = shoppingCart;
         this.delivery = delivery;
         this.orderStatus = orderStatus;
     }
 
-    public Order(Basket basket, Optional<Delivery> delivery){
-        this(null, ZonedDateTime.now(), basket, delivery, OrderStatus.NEW);
+    public Order(ShoppingCart shoppingCart, Optional<Delivery> delivery){
+        this(null, ZonedDateTime.now(), shoppingCart, delivery, OrderStatus.NEW);
     }
 
     public long getTotal() {
-        long result = basket.getTotal();
+        long result = shoppingCart.getTotal();
         if (delivery.isPresent()) {
             result += delivery.get().getCost();
         }

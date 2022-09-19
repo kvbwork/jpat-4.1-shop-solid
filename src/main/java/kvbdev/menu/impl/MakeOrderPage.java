@@ -3,7 +3,7 @@ package kvbdev.menu.impl;
 import kvbdev.menu.AbstractPage;
 import kvbdev.menu.InteractiveChannel;
 import kvbdev.menu.view.Presenter;
-import kvbdev.model.Basket;
+import kvbdev.model.ShoppingCart;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
 import kvbdev.model.OrderBuilder;
@@ -14,17 +14,17 @@ import java.util.function.Consumer;
 
 public class MakeOrderPage extends AbstractPage {
     protected final Consumer<Order> newOrderConsumer;
-    protected final Basket basket;
+    protected final ShoppingCart shoppingCart;
     protected final Presenter<Order> orderPresenter;
 
     public MakeOrderPage(
             String pageTitle,
-            Basket basket,
+            ShoppingCart shoppingCart,
             Presenter<Order> orderPresenter,
             Consumer<Order> newOrderConsumer
     ) {
         super(pageTitle);
-        this.basket = basket;
+        this.shoppingCart = shoppingCart;
         this.orderPresenter = orderPresenter;
         this.newOrderConsumer = newOrderConsumer;
     }
@@ -40,6 +40,11 @@ public class MakeOrderPage extends AbstractPage {
 
     @Override
     public void handle(InteractiveChannel channel) {
+        if (shoppingCart.isEmpty()){
+            channel.println("Невозможно создать заказ. Корзина пуста.");
+            return;
+        }
+
         OrderBuilder orderBuilder = new OrderBuilder();
 
         channel.println("Введите адрес доставки (оставьте пустым для самовывоза):");
@@ -54,7 +59,7 @@ public class MakeOrderPage extends AbstractPage {
             orderBuilder.delivery(delivery);
         }
 
-        orderBuilder.basket(new Basket(basket));
+        orderBuilder.shoppingCart(new ShoppingCart(shoppingCart));
         Order order = orderBuilder.build();
 
         channel.println(orderPresenter.toString(order));

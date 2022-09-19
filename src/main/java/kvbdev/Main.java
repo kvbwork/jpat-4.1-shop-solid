@@ -2,10 +2,10 @@ package kvbdev;
 
 import kvbdev.menu.impl.*;
 import kvbdev.menu.view.Presenter;
-import kvbdev.menu.view.impl.BasketPresenterImpl;
+import kvbdev.menu.view.impl.ShoppingCartPresenterImpl;
 import kvbdev.menu.view.impl.DeliveryPresenterImpl;
 import kvbdev.menu.view.impl.OrderPresenterImpl;
-import kvbdev.model.Basket;
+import kvbdev.model.ShoppingCart;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
 import kvbdev.model.Product;
@@ -28,47 +28,46 @@ public class Main {
 
         List<Order> ordersList = new ArrayList<>();
 
-        Basket basket = new Basket();
+        ShoppingCart shoppingCart = new ShoppingCart();
 
         Presenter<Optional<Delivery>> deliveryPresenter = new DeliveryPresenterImpl();
-        Presenter<Basket> basketPresenter = new BasketPresenterImpl();
-        Presenter<Order> orderPresenter = new OrderPresenterImpl(basketPresenter, deliveryPresenter);
+        Presenter<ShoppingCart> shoppingCartPresenter = new ShoppingCartPresenterImpl();
+        Presenter<Order> orderPresenter = new OrderPresenterImpl(shoppingCartPresenter, deliveryPresenter);
 
         InteractivePagesHandler session = new InteractivePagesHandler(System.in, System.out);
 
         ActionListPage mainPage = new ActionListPage("Главное меню");
 
-        ProductListPage productPage = new ProductListPage("Список товаров", p -> {
+        ProductListPage productPage = new ProductListPage("Список товаров", productList, p -> {
             session.println("Добавлено в корзину: " + p.getName());
-            basket.add(p);
+            shoppingCart.add(p);
         });
 
-        BasketPage basketPage = new BasketPage("Корзина", basket);
+        ShoppingCartPage shoppingCartPage = new ShoppingCartPage("Корзина", shoppingCart, shoppingCartPresenter);
 
         OrderListPage ordersPage = new OrderListPage("Статус заказов", ordersList, order -> {
             session.println(orderPresenter.toString(order));
         });
 
-        MakeOrderPage makeOrderPage = new MakeOrderPage("Оформление заказа", basket, orderPresenter,
+        MakeOrderPage makeOrderPage = new MakeOrderPage("Оформление заказа", shoppingCart, orderPresenter,
                 order -> {
                     order.setId(Long.valueOf(ordersList.size()));
                     ordersList.add(order);
                     session.println("Заказ сохранен.");
-                    basket.clear();
+                    shoppingCart.clear();
                     session.setPage(ordersPage);
                 });
 
         mainPage.add("1", "Список товаров", () -> session.setPage(productPage));
-        mainPage.add("2", "Корзина", () -> session.setPage(basketPage));
+        mainPage.add("2", "Корзина", () -> session.setPage(shoppingCartPage));
         mainPage.add("3", "Статус заказов", () -> session.setPage(ordersPage));
         mainPage.add("x", "Завершение работы", () -> System.exit(0));
 
-        productPage.addAll(productList);
         productPage.add("x", "Выход", () -> session.setPage(mainPage));
 
-        basketPage.add("=", "Оформить заказ", () -> session.setPage(makeOrderPage));
-        basketPage.add("-", "Удалить строку", () -> basketPage.removeItemAction(session));
-        basketPage.add("x", "Выход", () -> session.setPage(mainPage));
+        shoppingCartPage.add("=", "Оформить заказ", () -> session.setPage(makeOrderPage));
+        shoppingCartPage.add("-", "Удалить строку", () -> shoppingCartPage.removeItemAction(session));
+        shoppingCartPage.add("x", "Выход", () -> session.setPage(mainPage));
 
         ordersPage.add("x", "Выход", () -> session.setPage(mainPage));
 
