@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ShoppingCart {
+    protected final long INITIAL_COUNT_VALUE = 1L;
     protected final Map<Product, Long> map;
 
     public ShoppingCart() {
@@ -20,7 +21,7 @@ public class ShoppingCart {
     }
 
     public void add(Product product) {
-        map.merge(product, 1L, Long::sum);
+        map.merge(product, INITIAL_COUNT_VALUE, Long::sum);
     }
 
     public Optional<Product> findById(Long id) {

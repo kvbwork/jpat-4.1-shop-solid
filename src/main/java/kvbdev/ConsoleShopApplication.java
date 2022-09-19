@@ -1,8 +1,12 @@
 package kvbdev;
 
+import kvbdev.menu.ActionListPage;
 import kvbdev.menu.InteractivePage;
+import kvbdev.menu.InteractivePagesHandler;
+import kvbdev.menu.InteractivePagesRegister;
 import kvbdev.menu.impl.*;
 import kvbdev.menu.view.Presenter;
+import kvbdev.menu.view.PresentersRegister;
 import kvbdev.menu.view.impl.DeliveryPresenterImpl;
 import kvbdev.menu.view.impl.OrderPresenterImpl;
 import kvbdev.menu.view.impl.ShoppingCartPresenterImpl;
@@ -16,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConsoleShopApplication {
+public class ConsoleShopApplication implements PresentersRegister, InteractivePagesRegister {
 
     protected final List<Product> productRepository;
     protected final List<Order> ordersRepository;
@@ -41,13 +45,13 @@ public class ConsoleShopApplication {
 
     protected void configurePresenters() {
         DeliveryPresenterImpl deliveryPresenter = new DeliveryPresenterImpl();
-        presentersMap.put(Delivery.class, deliveryPresenter);
+        registerPresenterFor(Delivery.class, deliveryPresenter);
 
         ShoppingCartPresenterImpl shoppingCartPresenter = new ShoppingCartPresenterImpl();
-        presentersMap.put(ShoppingCart.class, shoppingCartPresenter);
+        registerPresenterFor(ShoppingCart.class, shoppingCartPresenter);
 
         OrderPresenterImpl orderPresenter = new OrderPresenterImpl(shoppingCartPresenter, deliveryPresenter);
-        presentersMap.put(Order.class, orderPresenter);
+        registerPresenterFor(Order.class, orderPresenter);
     }
 
     protected void configureMenu(InteractivePagesHandler session) {
@@ -56,29 +60,29 @@ public class ConsoleShopApplication {
         mainPage.add("2", "Корзина", () -> setPage("shopping_cart"));
         mainPage.add("3", "Просмотр заказов", () -> setPage("orders"));
         mainPage.add("x", "Завершение работы", this::stop);
-        pagesMap.put("main", mainPage);
+        registerPage("main", mainPage);
 
         ProductListPage productPage = new ProductListPage("Список товаров", productRepository, p -> {
             shoppingCart.add(p);
             session.println("Добавлено в корзину: " + p.getName() + ". Всего: " + shoppingCart.getCount(p).orElse(0L) + " шт.");
         });
         productPage.add("x", "Выход", () -> setPage("main"));
-        pagesMap.put("product", productPage);
+        registerPage("product", productPage);
 
         ShoppingCartPage shoppingCartPage = new ShoppingCartPage("Корзина", shoppingCart, getPresenterFor(ShoppingCart.class));
         shoppingCartPage.add("=", "Оформить заказ", () -> setPage("make_order"));
         shoppingCartPage.add("-", "Удалить строку", () -> shoppingCartPage.removeItemAction(session));
         shoppingCartPage.add("x", "Выход", () -> setPage("main"));
-        pagesMap.put("shopping_cart", shoppingCartPage);
+        registerPage("shopping_cart", shoppingCartPage);
 
-        OrderListPage ordersPage = new OrderListPage("Статус заказов", ordersRepository, order -> {
+        OrderListPage ordersPage = new OrderListPage("Просмотр заказов", ordersRepository, order -> {
             System.out.println("showOrder");
             ShowOrderPage showOrderPage = new ShowOrderPage(order, getPresenterFor(Order.class));
             showOrderPage.add("x", "Выход", () -> setPage("main"));
             session.setPage(showOrderPage);
         });
         ordersPage.add("x", "Выход", () -> setPage("main"));
-        pagesMap.put("orders", ordersPage);
+        registerPage("orders", ordersPage);
 
         MakeOrderPage makeOrderPage = new MakeOrderPage("Оформление заказа", shoppingCart, getPresenterFor(Order.class),
                 optOrder -> optOrder.ifPresentOrElse(
@@ -91,17 +95,29 @@ public class ConsoleShopApplication {
                         },
                         () -> setPage("shopping_cart"))
         );
-        pagesMap.put("make_order", makeOrderPage);
+        registerPage("make_order", makeOrderPage);
 
         session.setPage(mainPage);
     }
 
+    @Override
     public <T> Presenter<T> getPresenterFor(Class<T> clazz) {
         return (Presenter<T>) presentersMap.get(clazz);
     }
 
+    @Override
+    public <T> void registerPresenterFor(Class<T> clazz, Presenter<T> presenter) {
+        presentersMap.put(clazz, presenter);
+    }
+
+    @Override
     public InteractivePage getPage(String name) {
         return pagesMap.get(name);
+    }
+
+    @Override
+    public void registerPage(String nameId, InteractivePage page) {
+        pagesMap.put(nameId, page);
     }
 
     public void setPage(String name) {

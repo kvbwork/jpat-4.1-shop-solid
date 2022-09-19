@@ -1,7 +1,5 @@
 package kvbdev.menu;
 
-import kvbdev.menu.impl.ActionListPage;
-
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.function.Consumer;

@@ -1,8 +1,4 @@
-package kvbdev.menu.impl;
-
-import kvbdev.menu.AbstractPage;
-import kvbdev.menu.Action;
-import kvbdev.menu.InteractiveChannel;
+package kvbdev.menu;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,7 +1,4 @@
-package kvbdev;
-
-import kvbdev.menu.InteractiveChannel;
-import kvbdev.menu.InteractivePage;
+package kvbdev.menu;
 
 import java.io.*;
 import java.util.Scanner;
