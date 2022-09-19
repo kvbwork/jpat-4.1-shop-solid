@@ -31,7 +31,7 @@
 
 1. Класс `kvbdev.menu.ActionListPage` выводит обрабатываемые команды в виде меню. Его наследник `kvbdev.menu.ShowOrderPage` переопределяет метод [.getView()](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/5352a3d1bb726ca83a57c6f86c2175fd1d6559cc/src/main/java/kvbdev/menu/impl/ShowOrderPage.java#L18) и выводит текстовое представление `Order` до пунктов меню с командой `Выход`.
 
-2. Класс `kvbdev.ConsoleShopApplication` спроектирован так, чтобы предоставить его наследникам возможность расширения функционала без изменения исходного класса. Например переопределение метода [.configureMenu()](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/5352a3d1bb726ca83a57c6f86c2175fd1d6559cc/src/main/java/kvbdev/ConsoleShopApplication.java#L57)  позволит создать свой набор интерактивных экранов. А переопределение метода [.configurePresenters()]((https://github.com/kvbwork/jpat-4.1-shop-solid/blob/5352a3d1bb726ca83a57c6f86c2175fd1d6559cc/src/main/java/kvbdev/ConsoleShopApplication.java#L46)) позволит дополнить набор преобразователей для новых объектов.
+2. Класс `kvbdev.ConsoleShopApplication` спроектирован так, чтобы предоставить его наследникам возможность расширения функционала без изменения исходного класса. Например переопределение метода [.configureMenu()](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/5352a3d1bb726ca83a57c6f86c2175fd1d6559cc/src/main/java/kvbdev/ConsoleShopApplication.java#L57)  позволит создать свой набор интерактивных экранов. А переопределение метода [.configurePresenters()](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/5352a3d1bb726ca83a57c6f86c2175fd1d6559cc/src/main/java/kvbdev/ConsoleShopApplication.java#L46) позволит дополнить набор преобразователей для новых объектов.
 
 #### Liskov Substitution Principle
 
@@ -51,7 +51,7 @@ AbstractItemListPage  - выводит список элементов и ком
 
 #### Interface Segregation Principle
 
-Класс [kvbdev.ConsoleShopApplication](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/5352a3d1bb726ca83a57c6f86c2175fd1d6559cc/src/main/java/kvbdev/ConsoleShopApplication.java#L23) реализует интерфейсы `PresentersRegister` и `InteractivePagesRegister`. Они спроектированы минималистично на случай если функцию регистра объектов будет выполнять внешний класс. В таком случае при реализации одного регистра, не придется имплементировать методы относящиеся ко второму.
+Класс `kvbdev.ConsoleShopApplication` реализует интерфейсы [PresentersRegister](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/1fe4ec26c66bcfa7582114d6eb95ebfc67cf2a35/src/main/java/kvbdev/view/PresentersRegister.java) и [InteractivePagesRegister](https://github.com/kvbwork/jpat-4.1-shop-solid/blob/1fe4ec26c66bcfa7582114d6eb95ebfc67cf2a35/src/main/java/kvbdev/menu/InteractivePagesRegister.java). Они спроектированы минималистично на случай если функцию регистра объектов будет выполнять внешний класс. В таком случае при реализации одного регистра, не придется имплементировать методы относящиеся ко второму.
 
 #### Dependency Inversion Principle
 
