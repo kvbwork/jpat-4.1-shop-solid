@@ -9,10 +9,10 @@ import java.util.Optional;
 @Getter
 @Setter
 public class Order {
+    private final ShoppingCart shoppingCart;
     private Long id;
     private ZonedDateTime dateTime;
-    private final ShoppingCart shoppingCart;
-    private Optional<Delivery> delivery;
+    private final Optional<Delivery> delivery;
     private OrderStatus orderStatus;
 
     public Order(Long id, ZonedDateTime dateTime, ShoppingCart shoppingCart, Optional<Delivery> delivery, OrderStatus orderStatus) {
@@ -23,7 +23,7 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Order(ShoppingCart shoppingCart, Optional<Delivery> delivery){
+    public Order(ShoppingCart shoppingCart, Optional<Delivery> delivery) {
         this(null, ZonedDateTime.now(), shoppingCart, delivery, OrderStatus.NEW);
     }
 

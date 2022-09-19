@@ -6,11 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Delivery {
-    private String contact;
     private final String address;
     private final long cost;
+    private String contact;
 
-    public Delivery(String address, long cost){
+    public Delivery(String address, long cost) {
         this("", address, cost);
     }
 

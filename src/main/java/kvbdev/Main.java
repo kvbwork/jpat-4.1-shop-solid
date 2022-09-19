@@ -2,13 +2,13 @@ package kvbdev;
 
 import kvbdev.menu.impl.*;
 import kvbdev.menu.view.Presenter;
-import kvbdev.menu.view.impl.ShoppingCartPresenterImpl;
 import kvbdev.menu.view.impl.DeliveryPresenterImpl;
 import kvbdev.menu.view.impl.OrderPresenterImpl;
-import kvbdev.model.ShoppingCart;
+import kvbdev.menu.view.impl.ShoppingCartPresenterImpl;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
 import kvbdev.model.Product;
+import kvbdev.model.ShoppingCart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,24 +39,30 @@ public class Main {
         ActionListPage mainPage = new ActionListPage("Главное меню");
 
         ProductListPage productPage = new ProductListPage("Список товаров", productList, p -> {
-            session.println("Добавлено в корзину: " + p.getName());
             shoppingCart.add(p);
+            session.println("Добавлено в корзину: " + p.getName() + ". Всего: " + shoppingCart.getCount(p).orElse(0L) + " шт.");
         });
 
         ShoppingCartPage shoppingCartPage = new ShoppingCartPage("Корзина", shoppingCart, shoppingCartPresenter);
 
         OrderListPage ordersPage = new OrderListPage("Статус заказов", ordersList, order -> {
-            session.println(orderPresenter.toString(order));
+            System.out.println("showOrder");
+            ShowOrderPage showOrderPage = new ShowOrderPage(order, orderPresenter);
+            showOrderPage.add("x", "Выход", () -> session.setPage(mainPage));
+            session.setPage(showOrderPage);
         });
 
         MakeOrderPage makeOrderPage = new MakeOrderPage("Оформление заказа", shoppingCart, orderPresenter,
-                order -> {
-                    order.setId(Long.valueOf(ordersList.size()));
-                    ordersList.add(order);
-                    session.println("Заказ сохранен.");
-                    shoppingCart.clear();
-                    session.setPage(ordersPage);
-                });
+                optOrder -> optOrder.ifPresentOrElse(
+                        order -> {
+                            order.setId(Long.valueOf(ordersList.size()));
+                            ordersList.add(order);
+                            session.println("Заказ сохранен.");
+                            shoppingCart.clear();
+                            session.setPage(ordersPage);
+                        },
+                        () -> session.setPage(shoppingCartPage))
+        );
 
         mainPage.add("1", "Список товаров", () -> session.setPage(productPage));
         mainPage.add("2", "Корзина", () -> session.setPage(shoppingCartPage));

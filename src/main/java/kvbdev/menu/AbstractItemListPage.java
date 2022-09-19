@@ -53,11 +53,9 @@ public abstract class AbstractItemListPage<T> extends ActionListPage {
 
     @Override
     public void handle(InteractiveChannel channel) {
-        while (true) {
-            String input = channel.readLine();
-            if (runItemAction(input)) continue;
-            if (runAction(input)) break;
-            channel.println("Команда не распознана, повторите ввод.");
-        }
+        String input = channel.readLine();
+        if (runItemAction(input)) return;
+        if (runAction(input)) return;
+        channel.println("Команда не распознана, повторите ввод.");
     }
 }

@@ -18,7 +18,7 @@ public class OrderBuilder {
         return this;
     }
 
-    public Order build(){
+    public Order build() {
         return new Order(null, ZonedDateTime.now(), shoppingCart, delivery, orderStatus);
     }
 

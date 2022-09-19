@@ -1,9 +1,9 @@
 package kvbdev.menu.view.impl;
 
 import kvbdev.menu.view.Presenter;
-import kvbdev.model.ShoppingCart;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
+import kvbdev.model.ShoppingCart;
 
 import java.util.Objects;
 import java.util.Optional;

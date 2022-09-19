@@ -1,8 +1,8 @@
 package kvbdev.menu.view.impl;
 
 import kvbdev.menu.view.Presenter;
-import kvbdev.model.ShoppingCart;
 import kvbdev.model.Product;
+import kvbdev.model.ShoppingCart;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;

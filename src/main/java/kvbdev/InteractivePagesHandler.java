@@ -12,12 +12,13 @@ public class InteractivePagesHandler implements Closeable, InteractiveChannel {
     protected InteractivePage page;
 
     public InteractivePagesHandler(InputStream in, OutputStream out) {
-        scanner = new Scanner(System.in);
+        scanner = new Scanner(in);
         output = new PrintStream(out, true);
     }
 
     @Override
     public void close() throws IOException {
+        page = null;
         scanner.close();
         output.close();
     }

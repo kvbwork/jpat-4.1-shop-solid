@@ -1,17 +1,20 @@
 package kvbdev.model;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ShoppingCart {
     protected final Map<Product, Long> map;
-    
+
     public ShoppingCart() {
         map = new HashMap<>();
     }
 
-    public ShoppingCart(ShoppingCart sourceShoppingCart){
+    public ShoppingCart(ShoppingCart sourceShoppingCart) {
         this();
         map.putAll(sourceShoppingCart.map);
     }
@@ -27,11 +30,11 @@ public class ShoppingCart {
                 .findAny();
     }
 
-    public Optional<Long> getCount(Product product){
+    public Optional<Long> getCount(Product product) {
         return Optional.ofNullable(map.get(product));
     }
 
-    public void setCount(Product product, long count){
+    public void setCount(Product product, long count) {
         map.put(product, count);
     }
 
@@ -39,15 +42,15 @@ public class ShoppingCart {
         map.remove(product);
     }
 
-    public void clear(){
+    public void clear() {
         map.clear();
     }
 
-    public int size(){
+    public int size() {
         return map.size();
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return map.isEmpty();
     }
 

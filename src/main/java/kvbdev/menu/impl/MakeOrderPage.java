@@ -3,17 +3,18 @@ package kvbdev.menu.impl;
 import kvbdev.menu.AbstractPage;
 import kvbdev.menu.InteractiveChannel;
 import kvbdev.menu.view.Presenter;
-import kvbdev.model.ShoppingCart;
 import kvbdev.model.Delivery;
 import kvbdev.model.Order;
 import kvbdev.model.OrderBuilder;
+import kvbdev.model.ShoppingCart;
 import kvbdev.service.DeliveryService;
 import kvbdev.service.DeliveryServiceImpl;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public class MakeOrderPage extends AbstractPage {
-    protected final Consumer<Order> newOrderConsumer;
+    protected final Consumer<Optional<Order>> newOrderConsumer;
     protected final ShoppingCart shoppingCart;
     protected final Presenter<Order> orderPresenter;
 
@@ -21,7 +22,7 @@ public class MakeOrderPage extends AbstractPage {
             String pageTitle,
             ShoppingCart shoppingCart,
             Presenter<Order> orderPresenter,
-            Consumer<Order> newOrderConsumer
+            Consumer<Optional<Order>> newOrderConsumer
     ) {
         super(pageTitle);
         this.shoppingCart = shoppingCart;
@@ -34,13 +35,13 @@ public class MakeOrderPage extends AbstractPage {
         return "";
     }
 
-    protected DeliveryService getDeliveryService(){
+    protected DeliveryService getDeliveryService() {
         return DeliveryServiceImpl.getInstance();
     }
 
     @Override
     public void handle(InteractiveChannel channel) {
-        if (shoppingCart.isEmpty()){
+        if (shoppingCart.isEmpty()) {
             channel.println("Невозможно создать заказ. Корзина пуста.");
             return;
         }
@@ -66,11 +67,11 @@ public class MakeOrderPage extends AbstractPage {
 
         channel.println("Подтвердите заказ (оставьте пустым для отмены):");
         String inputStr = channel.readLine();
-        if (inputStr.isEmpty()){
-            channel.println("Отмена.");
-            return;
+        if (inputStr.isEmpty()) {
+            channel.println("Оформление заказа прервано.");
+            newOrderConsumer.accept(Optional.empty());
+        } else {
+            newOrderConsumer.accept(Optional.of(order));
         }
-
-        newOrderConsumer.accept(order);
     }
 }
