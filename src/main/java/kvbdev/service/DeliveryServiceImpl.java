@@ -2,12 +2,8 @@ package kvbdev.service;
 
 import kvbdev.model.Delivery;
 
-import java.util.Random;
-
 public class DeliveryServiceImpl implements DeliveryService {
     private static DeliveryServiceImpl INSTANCE;
-
-    protected final Random random = new Random();
 
     private DeliveryServiceImpl() {
     }
@@ -21,7 +17,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Override
     public Delivery getByAddress(String address) {
-        long cost = Math.abs(random.nextLong() % 5_000L);
+        long cost = Math.abs(address.hashCode() % 5_000);
         return new Delivery(address, cost);
     }
 }

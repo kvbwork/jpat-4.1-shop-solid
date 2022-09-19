@@ -20,7 +20,7 @@ public class ShoppingCartPage extends ActionListPage {
     }
 
     public void removeItemAction(InteractiveChannel channel) {
-        channel.println("Введите ключ записи:");
+        channel.println("Введите ключ записи для удаления:");
         shoppingCart.findById(Long.parseLong(channel.readLine()))
                 .ifPresentOrElse(shoppingCart::remove,
                         () -> channel.println("Не найдено"));
